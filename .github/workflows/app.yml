@@ -14,7 +14,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.10
+          python-version: 3.10.4
 
       - name: Virtual env
         uses: actions/cache@v2
@@ -29,7 +29,7 @@ jobs:
       
       - name: Crea archivos de dependencias
         run: |
-          cd ./venv/lib/python3.10/site-packages
+          cd ./venv/lib/python3.10.4/site-packages
             zip -r9 ../../../../api.zip .
 
       - name: Agrega los archivos del API a un archivo Zip
