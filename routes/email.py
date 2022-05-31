@@ -24,8 +24,8 @@ async def envia_email(sendmail: Email):
     msg['From'] = 'arellanos.baaeus@gmail.com'
     msg['To'] = sendmail.email
     emailvalidate = sendmail.email
-    html = resultado.template.format(subject=sendmail.subject)
-
+    #html = resultado.template.format(subject=sendmail.subject)
+    html = resultado.template
     msg.add_alternative(html, subtype="html")
     if re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", emailvalidate):
         try:
