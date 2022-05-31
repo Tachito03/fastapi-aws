@@ -1,0 +1,48 @@
+name: FastAPI Mails
+
+on: 
+  push: 
+    branches: 
+      - master 
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      -uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+
+      - name: Virtual env
+        uses: actions/cache@v2
+        id: cache-venv
+        with:
+          path: venv
+          keys: ${{ runner.os }}-venv-${{ hashFiles('**/requeriments*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-venv-
+      - name: Corremos Test 
+        run: . venv/bin/activate && pytest
+      
+      - name: Crea archivos de dependencias
+        run: |
+          cd ./venv/lib/python3.10/site-packages
+            zip -r9 ../../../../api.zip .
+
+      - name: Agrega los archivos del API a un archivo Zip
+        run: cd ./api && zip -g ../api.zip -r
+
+      - name: Sube el artefacto del archivo zip 
+        uses: actions/upload-artifact@v2
+        with:
+          name: api
+          path: api.zip
+
+
+
+
+
+
